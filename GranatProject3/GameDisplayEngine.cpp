@@ -36,9 +36,9 @@ void GameDisplayEngine::MouseControl(sf::Event event)
 		//===============================================================================================
 				if (event.type == sf::Event::MouseMoved)
 				{
-	             x_pos_real = double(event.mouseMove.x - Window->WindowSize.width() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.first;
-				 y_pos_real = double(event.mouseMove.y - Window->WindowSize.height() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.second;
-				MousePosition.SetRealCoord(event.mouseMove.x,event.mouseMove.y);
+	             x_pos_real = double(event.mouseMove.x - Window->size().width() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.first;
+				 y_pos_real = double(event.mouseMove.y - Window->size().height() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.second;
+				MousePosition.SetRealCoord(x_pos_real,y_pos_real);
 				Map.MapCellMoved(MousePosition.IsoPos(0), MousePosition.IsoPos(1));
 				Map.DefineCellMoved(MousePosition.MousePosReal(0), MousePosition.MousePosReal(1));
 				}
@@ -47,10 +47,10 @@ void GameDisplayEngine::MouseControl(sf::Event event)
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
 
-	             x_pos_real = double(event.mouseButton.x - Window->WindowSize.width() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.first;
-				 y_pos_real = double(event.mouseButton.y - Window->WindowSize.height() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.second;
+	             x_pos_real = double(event.mouseButton.x - Window->size().width() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.first;
+				 y_pos_real = double(event.mouseButton.y - Window->size().height() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.second;
 
-				MousePosition.SetRealCoord(event.mouseButton.x,event.mouseButton.y);
+				MousePosition.SetRealCoord(x_pos_real,y_pos_real);
 				Map.MapCellPressed(MousePosition.IsoPos(0), MousePosition.IsoPos(1));
 
 					QPair<int, int> Cell = Map.GetRealCellPressed();
@@ -78,6 +78,7 @@ void GameDisplayEngine::RunGame()
 		{
 			Units.MoveUnits();
 			clock.restart();
+			Window->DrawGame(*this);
 		}
 
 }

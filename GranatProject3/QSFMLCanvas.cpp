@@ -1,4 +1,5 @@
 #include "QSFMLCanvas.h"
+#include <GameDisplayEngine.h>
 
 
 QSFMLCanvas::QSFMLCanvas(QWidget* Parent) :
@@ -14,16 +15,15 @@ QSFMLCanvas::QSFMLCanvas(QWidget* Parent) :
 	// Set strong focus to enable keyboard events to be received
 	setFocusPolicy(Qt::StrongFocus);
 
+
+	Camera = new sf::View;
 	WindowSize.setHeight(800);
 	WindowSize.setWidth(1200);
 
-	 Camera = new sf::View(sf::Vector2f(0, 0), sf::Vector2f(WindowSize.width(), WindowSize.height()));
+	Camera = new sf::View(sf::Vector2f(0, 0), sf::Vector2f(WindowSize.width(), WindowSize.height()));
 
-	 Camera->zoom(2);
-	 Scale = Scale / 2;
-
+	this->setView(*Camera);
 	 CellSize = QSize(512, 256);
-	 this->setView(*Camera);
 
 
 	OffsetCamera.first = 0;
@@ -119,6 +119,15 @@ void QSFMLCanvas::mouseMoveEvent(QMouseEvent *e)
 	pushEvent(ev);
 }
 
+void QSFMLCanvas::resizeEvent(QResizeEvent* event)
+{
+	Camera->setSize(event->size().width(), event->size().height());
+	Camera->setCenter(0, 0);
+
+	qDebug() << "CAMERA - " << event->size().width() << event->size().height();
+	this->setView(*Camera);
+}
+
 void QSFMLCanvas::keyPressEvent(QKeyEvent *event) {
 	sf::Event ev;
 	ev.type = sf::Event::KeyPressed;
@@ -136,10 +145,6 @@ void QSFMLCanvas::keyReleaseEvent(QKeyEvent *event) {
 	//pushEvent(ev);
 };
 
-void QSFMLCanvas::LinkGameObject(GameDisplayEngine* Game)
-{
-	Game->ConnectWindow(this);
-}
 
 bool QSFMLCanvas::pollEvent(sf::Event& ev) 
 {

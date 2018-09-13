@@ -7,6 +7,9 @@ MainWindowInterface::MainWindowInterface(QWidget *parent)
 	connect(ui.ButShowNormal, SIGNAL(clicked()), this, SLOT(ShowNormalSlot()));
 
 	Canvas = new QSFMLCanvas(this);
+	QHBoxLayout* Lay = new QHBoxLayout;
+	Lay->addWidget(Canvas);
+	ui.groupBox->setLayout(Lay);
 	
 }
 
@@ -16,7 +19,7 @@ MainWindowInterface::~MainWindowInterface()
 
 void MainWindowInterface::LinkGameObject(GameDisplayEngine* Game)
 {
-	//Game->ConnectWindow(ui.)
+	Game->ConnectWindow(Canvas);
 }
 
 void MainWindowInterface::keyPressEvent(QKeyEvent* event)

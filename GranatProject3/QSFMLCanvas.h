@@ -11,13 +11,13 @@
 #include <qdebug.h>
 #include <QWidget>
 #include <QTimer>
-#include <GameDisplayEngine.h>
 
 #ifdef Q_WS_X11
 #include <Qt/qx11info_x11.h>
 #include <X11/Xlib.h>
 #endif
 
+class GameDisplayEngine;
 
 class QSFMLCanvas : public QWidget, public sf::RenderWindow
 {
@@ -35,7 +35,7 @@ public:
 	std::vector<sf::Event> SfEvents;
 
 	//==========================================================
-
+	
 	void DrawGame(GameDisplayEngine& Game);
 
 	//==========================================================
@@ -50,6 +50,7 @@ public:
 	void mouseReleaseEvent(QMouseEvent *e);
 	void wheelEvent(QWheelEvent *e);
 	void mouseMoveEvent(QMouseEvent *e);
+	void resizeEvent(QResizeEvent *event);
 	//==========================================================
 	void KeyboardControl(sf::Event Keyboard);
 

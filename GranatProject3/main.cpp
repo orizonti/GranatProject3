@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
 
 	//// Create the main frame
 
+
 	MainWindowInterface Interface;
 
 
@@ -33,8 +34,8 @@ int main(int argc, char *argv[])
 		GameDir = qgetenv("GAME_WORK_DIR");
 
 		GameDisplayEngine GameEngine;
-		GameEngine.SetWindow(&Interface);
-		Interface.showFullScreen();
+	    Interface.LinkGameObject(&GameEngine);
+		Interface.show();
 						  //GameEngine.RunGame();
 		                 
 
