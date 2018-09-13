@@ -2,63 +2,64 @@
 #include "HeaderAndStructures.h"
 #include <QWidget>
 #include <QTimer>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+
+#include <QMouseEvent>
+#include <QWheelEvent>
+#include <QKeyEvent>
+#include <qdebug.h>
+#include <QWidget>
+#include <QTimer>
+#include <GameDisplayEngine.h>
+
+#ifdef Q_WS_X11
+#include <Qt/qx11info_x11.h>
+#include <X11/Xlib.h>
+#endif
+
+
 class QSFMLCanvas : public QWidget, public sf::RenderWindow
 {
 public:
 
-	QSFMLCanvas(QWidget* Parent, const QPoint& Position, const QSize& Size, unsigned int FrameTime = 0);
+	QSFMLCanvas(QWidget* Parent);
 
 	virtual ~QSFMLCanvas();
+	bool _initialized;
 
-private:
+	//==========================================================
+	bool pollEvent(sf::Event& ev);
+	sf::Keyboard::Key QtKeyToSFML(int QtKey);
+	void pushEvent(sf::Event & ev);
+	std::vector<sf::Event> SfEvents;
 
-	virtual void OnInit() = 0;
+	//==========================================================
 
-	virtual void OnUpdate() = 0;
+	void DrawGame(GameDisplayEngine& Game);
 
-	virtual QPaintEngine* paintEngine() const;
-
+	//==========================================================
 	virtual void showEvent(QShowEvent*);
-
 	virtual void paintEvent(QPaintEvent*);
+	//==========================================================
 
-	QTimer myTimer;
+	//==========================================================
+	void keyPressEvent(QKeyEvent *event);
+	void keyReleaseEvent(QKeyEvent *event);
+	void mousePressEvent(QMouseEvent *e);
+	void mouseReleaseEvent(QMouseEvent *e);
+	void wheelEvent(QWheelEvent *e);
+	void mouseMoveEvent(QMouseEvent *e);
+	//==========================================================
+	void KeyboardControl(sf::Event Keyboard);
+
+	 sf::View* Camera;
+	 float Scale = 1;
+	 QSize WindowSize;
+	 QSize CellSize;
+	 QPair<int,int> OffsetCamera; //POSITION OF CAMERA VIEW ON MAP IN CELL COUNT
+
 	bool   myInitialized;
 };
 
 
-class MyCanvas : public QSFMLCanvas
-{
-public:
-
-	MyCanvas(QWidget* Parent, const QPoint& Position, const QSize& Size) :
-		QSFMLCanvas(Parent, Position, Size)
-	{
-
-	}
-
-private:
-
-	void OnInit()
-	{
-		// Load the image
-		myImage.loadFromFile("E:/WorkDir/Heights.png");
-		// Setup the sprite
-		mySprite.setTexture(myImage);
-	}
-
-	void OnUpdate()
-	{
-		// Clear screen
-		clear(sf::Color(0, 128, 0));
-
-		// Rotate the sprite
-		//mySprite.rotate(getFrameTime() * 100.f);
-
-		// Draw it
-		draw(mySprite);
-	}
-
-	sf::Texture  myImage;
-	sf::Sprite mySprite;
-};

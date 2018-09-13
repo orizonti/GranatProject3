@@ -2,34 +2,36 @@
 #include <HeaderAndStructures.h>
 #include <GameCoord.h>
 #include <MapContainerClass.h>
+#include <QSFMLCanvas.h>
+#include <QTimer>
+#include <MainWindowInterface.h>
 
-class GameDisplayEngine :public EventControlInterface
+class GameDisplayEngine : public QObject
 {
+	Q_OBJECT
 public: 
 	GameDisplayEngine();
 	~GameDisplayEngine();
 
-	 sf::RenderWindow* Window;
-	 sf::View* Camera;
+	void ConnectWindow(QSFMLCanvas* Interface);
+	 QSFMLCanvas* Window;
 
-	 float Scale = 1;
-	 QSize WindowSize;
-	 QSize CellSize;
-	 QPair<int,int> OffsetCamera; //POSITION OF CAMERA VIEW ON MAP IN CELL COUNT
+
 
 	sf::Clock clock; // 
 
     GameCoord MousePosition;  
 
-	 void KeyboardControl(sf::Event event);
-	 void MouseControl(sf::Event event);
-	 void RunGame();
+	void MouseControl(sf::Event event);
 
+	 QTimer Timer;
 
 	 void DrawALL();
 	 
 	 MapContainerClass Map;
 	 GameViewUnitContainer Units;
 
+	 public slots:
+	 void RunGame();
 };
 

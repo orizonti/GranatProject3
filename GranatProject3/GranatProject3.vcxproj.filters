@@ -69,9 +69,12 @@
     <ClCompile Include="GridShapeContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MainWindowInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="GranatProject3.ui">
+    <QtUic Include="MainWindowInterface.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -91,9 +94,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameCoord.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameDisplayEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameImageClass.h">
@@ -123,5 +123,13 @@
     <ClInclude Include="HeaderAndStructures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="GameDisplayEngine.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MainWindowInterface.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

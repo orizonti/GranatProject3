@@ -69,8 +69,8 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</IncludePath>
-      <Define>UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;$(QTDIR)\include\QtXml</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_XML_LIB</Define>
     </QtMoc>
     <QtUic>
       <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
@@ -100,8 +100,8 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;C:\ProgramLibrary\eigen-eigen\eigen-eigen;C:\ProgramLibrary\SFML-2.5.0\include;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</IncludePath>
-      <Define>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_XML_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtPrintSupport;C:\ProgramLibrary\eigen-eigen\eigen-eigen;C:\ProgramLibrary\SFML-2.5.0\include;$(QTDIR)\include\QtXml</IncludePath>
+      <Define>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_PRINTSUPPORT_LIB;QT_XML_LIB</Define>
     </QtMoc>
     <QtUic>
       <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
@@ -121,6 +121,7 @@
     <ClCompile Include="GameViewUnitContainer.cpp" />
     <ClCompile Include="GridShapeContainer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainWindowInterface.cpp" />
     <ClCompile Include="MapContainerClass.cpp" />
     <ClCompile Include="MapObjects.cpp" />
     <ClCompile Include="QSFMLCanvas.cpp" />
@@ -128,7 +129,7 @@
     <ClCompile Include="TileSetClass.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="GranatProject3.ui" />
+    <QtUic Include="MainWindowInterface.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="GranatProject3.qrc" />
@@ -140,11 +141,12 @@
     <ClInclude Include="AnimationSet.h" />
     <ClInclude Include="AnimationSetContainer.h" />
     <ClInclude Include="GameCoord.h" />
-    <ClInclude Include="GameDisplayEngine.h" />
+    <QtMoc Include="GameDisplayEngine.h" />
     <ClInclude Include="GameImageClass.h" />
     <ClInclude Include="GameViewUnitContainer.h" />
     <ClInclude Include="GridShapeContainer.h" />
     <ClInclude Include="HeaderAndStructures.h" />
+    <QtMoc Include="MainWindowInterface.h" />
     <ClInclude Include="MapContainerClass.h" />
     <ClInclude Include="MapObjects.h" />
     <ClInclude Include="QSFMLCanvas.h" />
