@@ -28,7 +28,6 @@ public:
 	void MapCellMoved(int x, int );
 
 	void DrawTerrain(sf::RenderWindow &Window);
-	void DrawCurrentCell(sf::RenderWindow &Window);
 	//---------------------------------------------------------------
 
 	//================================================================

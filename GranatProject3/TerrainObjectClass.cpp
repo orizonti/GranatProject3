@@ -45,29 +45,6 @@ void TerrainObjectClass::SetCoord(int x, int y)
 }
 
 
-sf::Sprite* TerrainObjectClass::GetSpriteToDraw()
-{
-	
-	TerrainData->Sprite->setPosition(Position.DecPos(0) + TerrainData->offset.first,
-		                             Position.DecPos(1) + TerrainData->offset.second - TerrainData->Size_In_Pixels.height()+128);
-
-	return TerrainData->Sprite;
-}
-//=====================================================================================
-void TerrainObjectClass::DrawGrid(sf::RenderWindow& Window)
-{
-
-	if (TerrainData->GridLines != 0)
-	{
-		TerrainData->GridLines->SetPosition(this->Position.DecPos(0) + TerrainData->offset.first, 
-			                                this->Position.DecPos(1) + TerrainData->offset.second - TerrainData->Size_In_Pixels.height()+128);
-		TerrainData->GridLines->DrawGrid(Window);
-
-		if (FLAG_MOUSE_MOVED)
-		TerrainData->GridLines->DrawCell(Window,Number_Cell_Moved-1);
-
-	}
-}
 //------------------------------------------------------------------------------------
 //METHOD IS USED TO DEBUGIN, SHOULD BE DELETED
 void TerrainObjectClass::DrawTerrainHeight(sf::RenderWindow& Window)
@@ -98,11 +75,30 @@ void TerrainObjectClass::DrawTerrainHeight(sf::RenderWindow& Window)
 	}
 
 }
-//------------------------------------------------------------------------------------
-void TerrainObjectClass::DrawObject(sf::RenderWindow& Window)
+
+void TerrainObjectClass::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	Window.draw(*this->GetSpriteToDraw());
+	TerrainData->Sprite->setPosition(Position.DecPos(0) + TerrainData->offset.first,
+		                             Position.DecPos(1) + TerrainData->offset.second - TerrainData->Size_In_Pixels.height()+128);
+	target.draw(*TerrainData->Sprite, states);
+
+	if (TerrainData->GridLines != 0)
+	{
+		TerrainData->GridLines->SetPosition(this->Position.DecPos(0) + TerrainData->offset.first, 
+			                                this->Position.DecPos(1) + TerrainData->offset.second - TerrainData->Size_In_Pixels.height()+128);
+	    target.draw(*TerrainData->GridLines,states);
+
+		if (FLAG_MOUSE_MOVED)
+		{
+		TerrainData->GridLines->SubCellShapes[Number_Cell_Moved -1 ].SetColor(sf::Color::Red);   //DRAW CELL IS INVOKED TO HIGHLING HILL'S CELL THAT IS POINTED BY CURSOR
+		target.draw(TerrainData->GridLines->SubCellShapes[Number_Cell_Moved - 1],states);
+		TerrainData->GridLines->SubCellShapes[Number_Cell_Moved -1 ].SetColor(sf::Color::Black);   //DRAW CELL IS INVOKED TO HIGHLING HILL'S CELL THAT IS POINTED BY CURSOR
+		}
+
+	}
 }
+
+//------------------------------------------------------------------------------------
 
 //=====================================================================================
 QPair<int, int> TerrainObjectClass::GetCellPressed()

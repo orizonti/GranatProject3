@@ -42,10 +42,8 @@ void QSFMLCanvas::DrawGame(GameDisplayEngine& Game)
 {
 	this->clear();
 	Game.Map.DrawTerrain(*this);    //DRAW TERRAIN TILES, GRID, AND RED QUADERANGLE OF CURRENT CELL WHEN CURSOR IS MOVING ON HILL CLUSTER
-	Game.Map.DrawCurrentCell(*this);//IF CURSOR IS MOVING ON PLAIN TERRAIN OBJECT THEN DRAWING RED RHOMBUS CELL
 	Game.Units.DrawUnits(*this);
 
-	//this->setView(*Camera);
 	this->display();
 }
 
@@ -326,14 +324,12 @@ void QSFMLCanvas::KeyboardControl(sf::Event Keyboard)
 			{
 				Camera->zoom(2);
 				Scale = Scale / 2;
-				qDebug() << Scale;
 
 			}
 			if (Keyboard.key.code == sf::Keyboard::D)
 			{
 				Camera->zoom(0.5);
 				Scale = Scale * 2;
-				qDebug() << Scale;
 			}
 
 	    this->setView(*Camera);

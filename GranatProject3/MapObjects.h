@@ -23,7 +23,6 @@ struct MoveDirectionVector
 
 	 Step_Iso_X = Unit_X * Speed;
 	 Step_Iso_Y = Unit_Y * Speed;
-	 qDebug() << "NEW MOVE DIRECTION - " << Unit_X << Unit_Y << Step_Iso_X << Step_Iso_Y;
 	}
 
 	bool IsNull()

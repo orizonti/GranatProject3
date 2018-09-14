@@ -6,7 +6,7 @@
 
 
 
-class TerrainObjectClass
+class TerrainObjectClass : public sf::Drawable
 {
 public:
 	TerrainObjectClass(int Type);
@@ -24,10 +24,9 @@ public:
 	//---------------------------------------------------
 	QVector<double>& GetHeightMapOnCell(int x, int y); // USED WHEN UNIT IS MOVING ON MAP AND GETTING CELL HEIGHTS TO DRAWING UNIT PROPERLY
 
-	void DrawObject(sf::RenderWindow& Window);
-	void DrawGrid(sf::RenderWindow& Window);
 	void DrawTerrainHeight(sf::RenderWindow& Window); //METHOD IS USED TO DEBUGING, SHOULD BE DELETED
 
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	//---------------------------------------------------
 	int TerrainType;
 	QSize TileSize;
@@ -45,7 +44,6 @@ private:
 	static std::shared_ptr<TileSetClass> TileSet;
 
 	int Number_Cell_Moved = 0;
-	sf::Sprite* GetSpriteToDraw();
 	//void DrawContour(sf::RenderWindow& Window);       //METHOD IS USED TO DEBUGING, SHOULD BE DELETED
 
 };

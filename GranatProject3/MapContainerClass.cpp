@@ -66,17 +66,6 @@ MapContainerClass::MapContainerClass()
 	MapUnitObject::TerrainMap = this;
 }
 
-void MapContainerClass::DrawCurrentCell(sf::RenderWindow &Window)
-{
-	if (!FLAG_CURSOR_ON_HILL) // DRAW RED RHOMBUS ON CURRENT PLAIN CELL, IF CURSOR MOVING ON HILL CURVE RED CELL IS DRAWING IN TERRAIN TERRAIN DRAWING METHOD DRAW
-	{
-	BorderCell.SetPosition(CursorPosition.DecPos(0), CursorPosition.DecPos(1));
-
-
-	BorderCell.DrawShape(Window);
-	}
-	BorderCellPressed.DrawShape(Window);
-}
 
 void MapContainerClass::DrawTerrain(sf::RenderWindow &Window)
 {
@@ -86,24 +75,28 @@ void MapContainerClass::DrawTerrain(sf::RenderWindow &Window)
 
 //===============================================================================================
 			for (TerrainObjectClass* item :Ground)   //DRAW PLAIN TERRAIN
-				item->DrawObject(Window);
+				Window.draw(*item);
 //------------------------------------------------------------------------
 			
 			for (CurveShape& Shape : PlainGridLines) //DRAW PLAIN RHOMBUS GRID 
 				Window.draw(Shape);
 //------------------------------------------------------------------------
 			for (TerrainObjectClass* item :Hill)     //DRAW HILL TERRAIN OBJECTS
-				item->DrawObject(Window);
+				Window.draw(*item);
 //===============================================================================================
-			for (QVector<TerrainObjectClass*> Layer : TerrainLayers)  //DRAW CURVE GRID ON HILL
-			{
-					for (TerrainObjectClass* item :Layer)
-						item->DrawGrid(Window);
-			}
 
 			for (TerrainObjectClass* item :Hill)    //DRAW HILL TERRAIN OBJECTS
 				item->DrawTerrainHeight(Window);
+
 //===============================================================================================
+	if (!FLAG_CURSOR_ON_HILL) // DRAW RED RHOMBUS ON CURRENT PLAIN CELL, IF CURSOR MOVING ON HILL CURVE RED CELL IS DRAWING IN TERRAIN TERRAIN DRAWING METHOD DRAW
+	{
+	BorderCell.SetPosition(CursorPosition.DecPos(0), CursorPosition.DecPos(1));
+
+	Window.draw(BorderCell);
+	}
+	Window.draw(BorderCellPressed);
+
 	    if(FLAG_CURSOR_ON_HILL)  //DRAW RED BORDER AROUND CURRENT HILL'S CLUSTER, IT MUST BE REMOVED, USED TO DEBUGING
 		Window.draw(ConvexToClusters.value(CurrentCenterCluster));
 

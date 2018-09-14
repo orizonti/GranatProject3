@@ -47,14 +47,15 @@ private:
 	sf::VertexArray        Curve; //USED TO DRAW SHAPE BY VERTEX DOTS
 };
 
-class QuadeRangleShape
-{
+class QuadeRangleShape : public sf::Drawable
+{ 
 public:
     QuadeRangleShape(QVector<CurveShape> Shapes);
 	QuadeRangleShape(const QuadeRangleShape& Shape);
     explicit QuadeRangleShape();
 	void SetQuadeShapes(QVector<CurveShape> Shapes);
 
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const ;
 	void SetPosition(int x, int y);
 	void SetColor(sf::Color color);
 
@@ -79,15 +80,12 @@ public:
 	sf::Text DrawHeight;
 };
 
-class GridShapeContainer
+class GridShapeContainer : public sf::Drawable
 {
 public:
 	GridShapeContainer();
 	void AddCurves(QString path);
 
-	void DrawGrid(sf::RenderWindow& Window);
-	void DrawCell(sf::RenderWindow& Window, int NumberCell);
-	void DrawContour(sf::RenderWindow& Window);
 
 	void DrawTerrainHeight(sf::RenderWindow& Window);
 	void SetOffset(int x, int y);
@@ -96,6 +94,7 @@ public:
 	QVector<QPainterPath> GetSubCells();
 	QPainterPath          GetPathContour();
 
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	QList<CurveShape>         CurvesVert; //LINES
 	QList<CurveShape>         CurvesHoriz;

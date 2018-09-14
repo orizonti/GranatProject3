@@ -311,24 +311,24 @@ void GridShapeContainer::SetPosition(int x, int y)
 
 }
 
-void GridShapeContainer::DrawContour(sf::RenderWindow& Window)
-{
-	for(CurveShape& Shape : this->ContourShapes)   // DrawContour IS INVOKED WHEN CURSOR ON THE CURRENT HILL
-		Window.draw(Shape);
-}
 
-void GridShapeContainer::DrawCell(sf::RenderWindow& Window, int NumberCell)
-{
-	this->SubCellShapes[NumberCell].SetColor(sf::Color::Red);   //DRAW CELL IS INVOKED TO HIGHLING HILL'S CELL THAT IS POINTED BY CURSOR
-	this->SubCellShapes[NumberCell].DrawShape(Window);
-	this->SubCellShapes[NumberCell].SetColor(sf::Color::Black);
-	
-}
 
-void GridShapeContainer::DrawGrid(sf::RenderWindow& Window)
+void QuadeRangleShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	for (QuadeRangleShape& QuadeShape : this->SubCellShapes)
-		QuadeShape.DrawShape(Window);
+	if (EdgeShapes.size() == 0)
+		return;
+
+	for (const CurveShape& Shape : EdgeShapes)
+	target.draw(Shape, states);
+
+}
+void GridShapeContainer::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	for (const QuadeRangleShape& QuadeShape : this->SubCellShapes)
+	target.draw(QuadeShape, states);
+
+	for(const CurveShape& Shape : this->ContourShapes)   // DrawContour IS INVOKED WHEN CURSOR ON THE CURRENT HILL
+	target.draw(Shape, states);
 }
 
 QPainterPath GridShapeContainer::GetPathContour()
@@ -402,14 +402,6 @@ void QuadeRangleShape::SetPosition(int x, int y)
 
 }
 
-void QuadeRangleShape::DrawShape(sf::RenderWindow& Window)
-{
-	if (EdgeShapes.size() == 0)
-		return;
-
-	for (CurveShape& Shape : EdgeShapes)
-		Window.draw(Shape);
-}
 
 void CurveShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
