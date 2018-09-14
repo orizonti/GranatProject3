@@ -16,13 +16,13 @@ QSFMLCanvas::QSFMLCanvas(QWidget* Parent) :
 	setFocusPolicy(Qt::StrongFocus);
 
 
-	Camera = new sf::View;
 	WindowSize.setHeight(800);
 	WindowSize.setWidth(1200);
 
-	Camera = new sf::View(sf::Vector2f(0, 0), sf::Vector2f(WindowSize.width(), WindowSize.height()));
+	Camera = new sf::View;
+	Camera->setCenter(0, 0);
+	Camera->setSize(this->size().width(), this->size().height());
 
-	this->setView(*Camera);
 	 CellSize = QSize(512, 256);
 
 
@@ -45,7 +45,7 @@ void QSFMLCanvas::DrawGame(GameDisplayEngine& Game)
 	Game.Map.DrawCurrentCell(*this);//IF CURSOR IS MOVING ON PLAIN TERRAIN OBJECT THEN DRAWING RED RHOMBUS CELL
 	Game.Units.DrawUnits(*this);
 
-	this->setView(*Camera);
+	//this->setView(*Camera);
 	this->display();
 }
 
@@ -62,6 +62,7 @@ void QSFMLCanvas::showEvent(QShowEvent*)
 		// Create the SFML window with the widget handle
 	    sf::Window::create((sf::WindowHandle)winId());
 
+	this->setView(*Camera);
 		// Let the derived class do its specific stuff
 		myInitialized = true;
 	}
@@ -71,7 +72,6 @@ void QSFMLCanvas::showEvent(QShowEvent*)
 
 void QSFMLCanvas::paintEvent(QPaintEvent*)
 {
-	display();
 }
 
 //=============================================================================================
@@ -122,9 +122,27 @@ void QSFMLCanvas::mouseMoveEvent(QMouseEvent *e)
 void QSFMLCanvas::resizeEvent(QResizeEvent* event)
 {
 	Camera->setSize(event->size().width(), event->size().height());
-	Camera->setCenter(0, 0);
+	//Camera->setCenter(0, 0);
+	this->setSize(sf::Vector2u(event->size().width(), event->size().height()));
 
-	qDebug() << "CAMERA - " << event->size().width() << event->size().height();
+			float temp_scale = 1;
+
+			if (Scale < 1)
+				while (temp_scale != Scale)
+				{
+				Camera->zoom(2);
+				temp_scale /= 2;
+				}
+
+			if (Scale > 1)
+				while (temp_scale != Scale)
+				{
+				Camera->zoom(0.5);
+				temp_scale *= 2;
+				}
+
+//	qDebug() << "ZOOM " << temp_scale;
+//	qDebug() << "CAMERA - " << event->size().width() << event->size().height();
 	this->setView(*Camera);
 }
 
@@ -146,15 +164,28 @@ void QSFMLCanvas::keyReleaseEvent(QKeyEvent *event) {
 };
 
 
-bool QSFMLCanvas::pollEvent(sf::Event& ev) 
+bool QSFMLCanvas::pollEvent(sf::Event& event) 
 {
 
 	if (SfEvents.size() == 0)
 		return false;
 
-	ev = SfEvents.back();
+	event = SfEvents.back();
 	SfEvents.pop_back();
+//	if (event.type == sf::Event::Resized)
+//	{
+//		qDebug() << "                       Resized";
+//	    this->setView(*Camera);
+//		//sf::FloatRect rect(sf::Vector2f(0, 0), sf::Vector2f(event.size.width, event.size.height));
+//		//	Camera->setSize(event.size.width, event.size.height);
+//		//	Camera->setCenter(0, 0);
+//		//	this->WindowSize.setWidth(event.size.width);
+//		//	this->WindowSize.setHeight(event.size.height);
 
+//		//	qDebug() << "CAMERA - " << event.size.width << event.size.height;
+//		//	Window->setView(*Camera);
+//		//Window->setView(sf::View(rect));
+//	}
 	return true;
 }
 //=============================================================================================
@@ -295,12 +326,15 @@ void QSFMLCanvas::KeyboardControl(sf::Event Keyboard)
 			{
 				Camera->zoom(2);
 				Scale = Scale / 2;
+				qDebug() << Scale;
 
 			}
 			if (Keyboard.key.code == sf::Keyboard::D)
 			{
 				Camera->zoom(0.5);
 				Scale = Scale * 2;
+				qDebug() << Scale;
 			}
 
+	    this->setView(*Camera);
 }

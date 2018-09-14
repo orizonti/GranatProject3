@@ -10,6 +10,7 @@ MainWindowInterface::MainWindowInterface(QWidget *parent)
 	QHBoxLayout* Lay = new QHBoxLayout;
 	Lay->addWidget(Canvas);
 	ui.groupBox->setLayout(Lay);
+
 	
 }
 
