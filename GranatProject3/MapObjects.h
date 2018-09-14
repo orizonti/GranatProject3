@@ -37,7 +37,7 @@ struct MoveDirectionVector
 	int Unit_Y = 0;
 };
 
-class MapObject
+class MapObject : public sf::Drawable
 {
 public:
 	MapObject();
@@ -49,6 +49,7 @@ public:
 	sf::Vector2f GetCoord();
 	std::shared_ptr<SimpleImage> ObjectImage;
 
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	MoveDirectionVector MoveDirection;
 
 	GameCoord CurrentPosition;
@@ -58,7 +59,6 @@ public:
 	void SetMoveDirection(int Dir_X, int Dir_Y, double Lift_Step);
 
 	void LiftObject(double ElevationStep);
-	void DrawObject(sf::RenderWindow& Window);
 };
 
 
@@ -69,7 +69,7 @@ public:
 	MapGroupObject(QString TypeObject,int size);
 	int GroupSize = 0;
 
-	void DrawObject(sf::RenderWindow& Window);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void AppendObject(std::shared_ptr<MapObject>& Object);
 	QVector<std::shared_ptr<MapObject>> MapObjects;
 };

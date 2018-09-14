@@ -4,7 +4,7 @@
 #include "GameCoord.h"
 
 class AnimationSetContainer;
-class SimpleImage
+class SimpleImage : public sf::Drawable
 {
 public:
 	SimpleImage();
@@ -13,7 +13,7 @@ public:
 	SimpleImage(SimpleImage&& Image);
 	~SimpleImage();
 
-virtual	void DisplayImage(sf::RenderWindow& Window);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	void SetTexture(sf::Texture& Texture);
 	void SetPositionImage(float x, float y);
@@ -50,7 +50,7 @@ public:
 	static std::shared_ptr<AnimationSetContainer> Animations;
 	static void LoadAnimationSet(QString PathAnimation);
 
-	void DisplayImage(sf::RenderWindow& Window);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
 	std::shared_ptr<AnimationSet> AnimationImages = NULL;

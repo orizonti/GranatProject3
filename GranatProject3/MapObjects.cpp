@@ -21,6 +21,16 @@ void MapObject::SetPosition(int x, int y)
 };
 
 
+void MapObject::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	ObjectImage->draw(target, states);
+}
+
+void MapGroupObject::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	for (auto Object : MapObjects)
+	Object->ObjectImage->draw(target, states);
+}
 
 void MapObject::MoveObjectOnStep()
 {
@@ -49,20 +59,11 @@ void MapObject::LiftObject(double ElevationStep)
 	ObjectImage->Elevate(ElevationStep);
 }
 
-void MapObject::DrawObject(sf::RenderWindow& Window)
-{
-	ObjectImage->DisplayImage(Window);
-}
 
 MapGroupObject::MapGroupObject()
 {
 }
 
-void MapGroupObject::DrawObject(sf::RenderWindow& Window)
-{
-	for (auto Object : MapObjects)
-		Object->DrawObject(Window);
-}
 
 MapGroupObject::MapGroupObject(QString TypeObject, int size)
 {

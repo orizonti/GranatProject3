@@ -35,9 +35,18 @@ AnimationImage::AnimationImage(const AnimationImage& Image)
 
 }
 
-void SimpleImage::DisplayImage(sf::RenderWindow& Window)
+
+void AnimationImage::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	Window.draw(*Sprite);
+	qDebug() << "draw animation unit";
+	target.draw(*Sprite, states);
+	//this->IterateAnimation();
+}
+
+void SimpleImage::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	qDebug() << "draw simpli unit";
+	target.draw(*Sprite, states);
 }
 
 void AnimationImage::LoadAnimationSet(QString PathAnimation)
@@ -46,11 +55,6 @@ void AnimationImage::LoadAnimationSet(QString PathAnimation)
    Animations->UploadAnimationSets(PathAnimation);
 }
 
-void AnimationImage::DisplayImage(sf::RenderWindow& Window)
-{
-	Window.draw(*Sprite);
-	this->IterateAnimation();
-}
 
 
 

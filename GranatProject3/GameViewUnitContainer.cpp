@@ -71,7 +71,7 @@ void GameViewUnitContainer::DrawUnits(sf::RenderWindow &Window)
 {
 	for (auto Unit : UnitOnMapContainer.values())
 	{
-		Unit->DrawObject(Window);
+		Window.draw(*Unit);
 	}
 }
 
