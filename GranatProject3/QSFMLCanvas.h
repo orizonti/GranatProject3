@@ -55,6 +55,9 @@ public:
 	//==========================================================
 	void KeyboardControl(sf::Event Keyboard);
 
+
+
+
 	 sf::View* Camera;
 	 float Scale = 1;
 	 QSize WindowSize;

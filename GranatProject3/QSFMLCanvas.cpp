@@ -38,9 +38,6 @@ void QSFMLCanvas::pushEvent(sf::Event & ev) {
 	SfEvents.push_back(ev);
 }
 
-void QSFMLCanvas::ConvertMousePos(sf::Event& ev)
-{
-}
 
 void QSFMLCanvas::DrawGame(GameDisplayEngine& Game)
 {
@@ -79,6 +76,7 @@ void QSFMLCanvas::mousePressEvent(QMouseEvent *e) {
 	ev.mouseButton.button = (e->buttons() == Qt::RightButton ? sf::Mouse::Right : sf::Mouse::Left);
 	ev.mouseButton.x = e->localPos().x();
 	ev.mouseButton.y = e->localPos().y();
+	ConvertMousePos(ev);
 
 	pushEvent(ev);
 }
@@ -112,6 +110,7 @@ void QSFMLCanvas::mouseMoveEvent(QMouseEvent *e)
 
 	ev.mouseMove.x = e->localPos().x();
 	ev.mouseMove.y = e->localPos().y();
+	ConvertMousePos(ev);
 
 	pushEvent(ev);
 }
@@ -160,31 +159,31 @@ void QSFMLCanvas::keyReleaseEvent(QKeyEvent *event) {
 	//pushEvent(ev);
 };
 
-
-bool QSFMLCanvas::pollEvent(sf::Event& event) 
+void QSFMLCanvas::ConvertMousePos(sf::Event& event)
 {
-
-	if (SfEvents.size() == 0)
-		return false;
-
-	event = SfEvents.back();
-	SfEvents.pop_back();
-//	if (event.type == sf::Event::Resized)
+	double x, y;
+	//===============================================================================================
+//	if (event.type == sf::Event::MouseMoved)
 //	{
-//		qDebug() << "                       Resized";
-//	    this->setView(*Camera);
-//		//sf::FloatRect rect(sf::Vector2f(0, 0), sf::Vector2f(event.size.width, event.size.height));
-//		//	Camera->setSize(event.size.width, event.size.height);
-//		//	Camera->setCenter(0, 0);
-//		//	this->WindowSize.setWidth(event.size.width);
-//		//	this->WindowSize.setHeight(event.size.height);
-
-//		//	qDebug() << "CAMERA - " << event.size.width << event.size.height;
-//		//	Window->setView(*Camera);
-//		//Window->setView(sf::View(rect));
+//		x_pos_real = 256 * ((event.mouseMove.x - this->width() / 2) / (CellSize.height()*Scale) - OffsetCamera.first);
+//		y_pos_real = 256 * ((event.mouseMove.y - this->height() / 2) / (CellSize.height()*Scale) - OffsetCamera.second);
+//		qDebug() << "MOUSE POS REAL  - " << x_pos_real << y_pos_real << event.mouseMove.x << event.mouseMove.y;
 //	}
-	return true;
+	if (event.type == sf::Event::MouseMoved)
+	{
+		event.mouseMove.x = 256 * ((event.mouseMove.x - this->width() / 2) / (CellSize.height()*Scale) - OffsetCamera.first);
+		event.mouseMove.y = 256 * ((event.mouseMove.y - this->height() / 2) / (CellSize.height()*Scale) - OffsetCamera.second);
+	}
+
+	//===============================================================================================
+	if (event.type == sf::Event::MouseButtonPressed)
+	{
+		qDebug() << "MOUSE POS PRESSED  - " << event.mouseMove.x << event.mouseMove.y;
+		event.mouseButton.x = 256 * ((event.mouseButton.x - this->width() / 2) / (CellSize.height()*Scale) - OffsetCamera.first);
+		event.mouseButton.y = 256 * ((event.mouseButton.y - this->height() / 2) / (CellSize.height()*Scale) - OffsetCamera.second);
+	}
 }
+
 //=============================================================================================
 
 

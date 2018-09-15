@@ -100,4 +100,16 @@ void MainWindowInterface::DisplayTerrainData(TerrainObjectClass* DrawObjects)
 
 }
 
+bool MainWindowInterface::pollEvent(sf::Event& event) 
+{
 
+	if (Canvas->SfEvents.size() == 0)
+		return false;
+
+	//if (event.type == sf::Event::MouseMoved || event.type == sf::Event::MouseButtonPressed)
+	//	Canvas->ConvertMousePos(event);
+
+	event = Canvas->SfEvents.back();
+	Canvas->SfEvents.pop_back();
+	return true;
+}

@@ -32,8 +32,7 @@ virtual	void operator<<(QVector<TerrainObjectClass*>& DrawObject) = 0;
 
 virtual	void ClearDisplay() = 0;
 virtual	void Draw() = 0;
-virtual void GetNextEvent();
-virtual QPair<float, float> ConvertMousePos();
+virtual bool pollEvent(sf::Event& event) = 0;
 };
 
 
@@ -44,16 +43,6 @@ class MainWindowInterface : public QWidget, public DisplayInterface
 public:
 	MainWindowInterface(QWidget *parent = Q_NULLPTR);
 	~MainWindowInterface();
-
-
-//				double x_pos_real;
-//				double y_pos_real;
-
-// x_pos_real = double(event.mouseMove.x - Window->size().width() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.first;
-// y_pos_real = double(event.mouseMove.y - Window->size().height() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.second;
-
-// x_pos_real = double(event.mouseButton.x - Window->size().width() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.first;
-// y_pos_real = double(event.mouseButton.y - Window->size().height() / 2) / (Window->CellSize.height()*Window->Scale) - Window->OffsetCamera.second;
 	void keyPressEvent(QKeyEvent *event);
 	QSFMLCanvas* Canvas;
 
@@ -72,6 +61,7 @@ public:
 	void ClearDisplay();
 	void Draw();
 
+    bool pollEvent(sf::Event& event);
 	void DisplayMapObjectData(MapObject& DrawObject);
 	void DisplayTerrainData(TerrainObjectClass* DrawObjects);
 

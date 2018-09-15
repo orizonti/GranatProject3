@@ -20,8 +20,8 @@ GameCoord::~GameCoord()
 }
 void GameCoord::SetRealCoord(double x, double y)
 {
-	DecPos(0) = x;
-	DecPos(1) = y;
+	DecPos(0) = x/256;
+	DecPos(1) = y/256;
 
 
 				IsoPos = n*DecPos;
