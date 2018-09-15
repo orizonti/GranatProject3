@@ -1,4 +1,5 @@
 #include "GameViewUnitContainer.h"
+#include "MainWindowInterface.h"
 GameViewUnitContainer::GameViewUnitContainer()
 {
 	    QString GameDir = qgetenv("GAME_WORK_DIR");
@@ -67,12 +68,9 @@ void GameViewUnitContainer::MapCellPressed(int x, int y)
 
 }
 
-void GameViewUnitContainer::DrawUnits(sf::RenderWindow &Window)
+void GameViewUnitContainer::Draw(DisplayInterface& Display)
 {
-	for (auto Unit : UnitOnMapContainer.values())
-	{
-		Window.draw(*Unit);
-	}
+	Display << UnitOnMapContainer.values();
 }
 
 void GameViewUnitContainer::MoveUnits()

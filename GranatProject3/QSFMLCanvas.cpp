@@ -38,13 +38,12 @@ void QSFMLCanvas::pushEvent(sf::Event & ev) {
 	SfEvents.push_back(ev);
 }
 
+void QSFMLCanvas::ConvertMousePos(sf::Event& ev)
+{
+}
+
 void QSFMLCanvas::DrawGame(GameDisplayEngine& Game)
 {
-	this->clear();
-	Game.Map.DrawTerrain(*this);    //DRAW TERRAIN TILES, GRID, AND RED QUADERANGLE OF CURRENT CELL WHEN CURSOR IS MOVING ON HILL CLUSTER
-	Game.Units.DrawUnits(*this);
-
-	this->display();
 }
 
 void QSFMLCanvas::showEvent(QShowEvent*)

@@ -34,6 +34,7 @@ public:
 	void pushEvent(sf::Event & ev);
 	std::vector<sf::Event> SfEvents;
 
+	void ConvertMousePos(sf::Event& event);
 	//==========================================================
 	
 	void DrawGame(GameDisplayEngine& Game);

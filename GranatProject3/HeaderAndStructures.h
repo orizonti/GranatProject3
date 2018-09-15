@@ -19,7 +19,7 @@
 #include <memory>
 #include <QXmlStreamWriter>
 #include <QFile>
-
+class DisplayInterface;
 
 enum Direction { Left = 0, Right = 1, Up = 2, Down = 3, UpLeft = 4, UpRight = 5, DownLeft = 6, DownRight = 7 };
 enum TypeUnit   { MaceMap = 0, SpearMan};
@@ -33,6 +33,16 @@ public:
 	virtual void MouseControl(sf::Event Mouse_event) = 0;
 
 	friend void operator >> (sf::Event event, EventControlInterface& Interface);
+};
+
+class DrawContrainerInterface
+{
+public:
+	friend void operator << (DisplayInterface& Display, DrawContrainerInterface& Int)
+	{
+		Int.Draw(Display);
+	}
+	virtual void Draw(DisplayInterface& Display) = 0;
 };
 
 extern sf::Font Font;

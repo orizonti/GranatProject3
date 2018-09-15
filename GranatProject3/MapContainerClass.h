@@ -1,14 +1,13 @@
 #pragma once
 
 #include "TerrainObjectClass.h"
-#include "TerrainObjectClass.h"
 #include "GameViewUnitContainer.h"
 #include "TileSetClass.h"
 
 typedef QVector<TerrainObjectClass*> Terrains;
 typedef QPair<int, int> PairCoord;
 
-class MapContainerClass
+class MapContainerClass : public DrawContrainerInterface
 {
 public:
 	MapContainerClass();
@@ -27,7 +26,7 @@ public:
 	void MapCellPressed(int x, int y);
 	void MapCellMoved(int x, int );
 
-	void DrawTerrain(sf::RenderWindow &Window);
+	void Draw(DisplayInterface& Display);
 	//---------------------------------------------------------------
 
 	//================================================================
@@ -42,12 +41,12 @@ public:
 
 
 	//------------------------------------------------
-	QuadeRangleShape BorderCell                      ; //BORDER CELL WITH RED COLOR, THAT IS DRAWING WHEN MOUSE MOVING UNDER CELL  
-	QuadeRangleShape BorderCellPressed               ; //BORDER CELL WITH YELLOW COLOR, THAT IS DRAWING WHEN CELL HAS BEEN PRESSED BY MOUSE
+	std::shared_ptr<QuadeRangleShape> BorderCell       ; //BORDER CELL WITH RED COLOR, THAT IS DRAWING WHEN MOUSE MOVING UNDER CELL  
+	std::shared_ptr<QuadeRangleShape> BorderCellPressed; //BORDER CELL WITH YELLOW COLOR, THAT IS DRAWING WHEN CELL HAS BEEN PRESSED BY MOUSE
 	//------------------------------------------------
 
 	QMap<int,Terrains>  TerrainLayers    ;//TERRAIN OBJECTS DEVIDED TO LAYERS, GROUNDS and HILLS 
-	QVector<CurveShape> PlainGridLines   ;//BLACK LINES THAT IS DRAWED ON ALL MAP UNDER HILLS LAYER
+	QVector<std::shared_ptr<sf::Shape>> PlainGridLines   ;//BLACK LINES THAT IS DRAWED ON ALL MAP UNDER HILLS LAYER
 
 	//------------------------------------------------
 	QMap<PairCoord, Terrains>       ClusteredObjects ;//OBJECTS IS WANTED TO DEFINE CURRENT TERRAIN AND CELL IN HILL 

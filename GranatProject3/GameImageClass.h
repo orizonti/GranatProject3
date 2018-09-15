@@ -33,7 +33,7 @@ protected:
 	QString Type = "None";
 	GameCoord ImagePosOnMap;
 	Direction CurrentDir = Right;
-	std::shared_ptr<sf::Sprite>  Sprite;
+mutable	std::shared_ptr<sf::Sprite>  Sprite;
 	double DecElevation = 0;
 	
 };
@@ -54,9 +54,9 @@ public:
 
 private:
 	std::shared_ptr<AnimationSet> AnimationImages = NULL;
-	int         CurrentFrame = 0;
+mutable	int         CurrentFrame = 0;
 
-	void IterateAnimation();
+	void IterateAnimation() const;
 };
 
 

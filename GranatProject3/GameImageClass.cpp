@@ -38,14 +38,12 @@ AnimationImage::AnimationImage(const AnimationImage& Image)
 
 void AnimationImage::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	qDebug() << "draw animation unit";
 	target.draw(*Sprite, states);
-	//this->IterateAnimation();
+	IterateAnimation();
 }
 
 void SimpleImage::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	qDebug() << "draw simpli unit";
 	target.draw(*Sprite, states);
 }
 
@@ -86,7 +84,7 @@ SimpleImage::~SimpleImage()
 }
 
 
-void AnimationImage::IterateAnimation()
+void AnimationImage::IterateAnimation() const
 {
 	if (this->AnimationImages == NULL)
 		return;

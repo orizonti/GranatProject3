@@ -1,4 +1,5 @@
 #include "MapContainerClass.h"
+#include "MainWindowInterface.h"
 sf::Font Font;
 
 
@@ -23,12 +24,12 @@ MapContainerClass::MapContainerClass()
 		QuadeLines.append(Line2);
 		QuadeLines.append(Line3);
 		QuadeLines.append(Line4);
+		BorderCell = std::shared_ptr<QuadeRangleShape>(new QuadeRangleShape);
+		BorderCell->SetQuadeShapes(QuadeLines);
+		BorderCell->SetColor(sf::Color::Red);
 
-		BorderCell.SetQuadeShapes(QuadeLines);
-		BorderCell.SetColor(sf::Color::Red);
-
-		BorderCellPressed = BorderCell;
-		BorderCellPressed.SetColor(sf::Color::Yellow);
+		BorderCellPressed = std::shared_ptr<QuadeRangleShape>(new QuadeRangleShape);
+		BorderCellPressed->SetColor(sf::Color::Yellow);
 		//===============================================================================================
 
 		//===============================================================================================
@@ -39,8 +40,8 @@ MapContainerClass::MapContainerClass()
 			StartLine.SetCoordIsometric(x, 0);
 			EndLine.SetCoordIsometric(x, 59);
 
-		  CurveShape Line;
-		  Line.AddLine(StartLine.GetDecVector(), EndLine.GetDecVector(),0);
+		  auto Line = std::shared_ptr<CurveShape>(new CurveShape);
+		  Line->AddLine(StartLine.GetDecVector(), EndLine.GetDecVector(),0);
 		  PlainGridLines.append(Line);
 		}
 		//------------------------------------------------------------------------------------------------
@@ -50,8 +51,8 @@ MapContainerClass::MapContainerClass()
 			StartLine.SetCoordIsometric(0, y);
 			EndLine.SetCoordIsometric(59, y);
 
-		  CurveShape Line;
-		  Line.AddLine(StartLine.GetDecVector(), EndLine.GetDecVector(),1);
+		  auto Line = std::shared_ptr<CurveShape>(new CurveShape);
+		  Line->AddLine(StartLine.GetDecVector(), EndLine.GetDecVector(),1);
 		  PlainGridLines.append(Line);
 		}
 		//===============================================================================================
@@ -67,38 +68,31 @@ MapContainerClass::MapContainerClass()
 }
 
 
-void MapContainerClass::DrawTerrain(sf::RenderWindow &Window)
+void MapContainerClass::Draw(DisplayInterface& Display)
 {
 
 			QVector<TerrainObjectClass*> Ground = TerrainLayers.value(0);
 			QVector<TerrainObjectClass*> Hill = TerrainLayers.value(1);
-
-//===============================================================================================
-			for (TerrainObjectClass* item :Ground)   //DRAW PLAIN TERRAIN
-				Window.draw(*item);
-//------------------------------------------------------------------------
 			
-			for (CurveShape& Shape : PlainGridLines) //DRAW PLAIN RHOMBUS GRID 
-				Window.draw(Shape);
-//------------------------------------------------------------------------
-			for (TerrainObjectClass* item :Hill)     //DRAW HILL TERRAIN OBJECTS
-				Window.draw(*item);
-//===============================================================================================
+			Display << Ground;//DRAW PLAIN TERRAIN
+			
+			Display << (QVector<std::shared_ptr<sf::Drawable>>&)PlainGridLines;//DRAW PLAIN RHOMBUS GRID 
+			
+			Display << Hill;//DRAW HILL TERRAIN OBJECTS
 
-			for (TerrainObjectClass* item :Hill)    //DRAW HILL TERRAIN OBJECTS
-				item->DrawTerrainHeight(Window);
 
-//===============================================================================================
 	if (!FLAG_CURSOR_ON_HILL) // DRAW RED RHOMBUS ON CURRENT PLAIN CELL, IF CURSOR MOVING ON HILL CURVE RED CELL IS DRAWING IN TERRAIN TERRAIN DRAWING METHOD DRAW
 	{
-	BorderCell.SetPosition(CursorPosition.DecPos(0), CursorPosition.DecPos(1));
-
-	Window.draw(BorderCell);
+	BorderCell->SetPosition(CursorPosition.DecPos(0), CursorPosition.DecPos(1));
+	Display << BorderCell;
 	}
-	Window.draw(BorderCellPressed);
+	Display << BorderCellPressed;
 
-	    if(FLAG_CURSOR_ON_HILL)  //DRAW RED BORDER AROUND CURRENT HILL'S CLUSTER, IT MUST BE REMOVED, USED TO DEBUGING
-		Window.draw(ConvexToClusters.value(CurrentCenterCluster));
+//for (TerrainObjectClass* item :Hill)    //DRAW HILL TERRAIN OBJECTS
+//	item->DrawTerrainHeight(Window);
+
+//	    if(FLAG_CURSOR_ON_HILL)  //DRAW RED BORDER AROUND CURRENT HILL'S CLUSTER, IT MUST BE REMOVED, USED TO DEBUGING
+//		Window.draw(ConvexToClusters.value(CurrentCenterCluster));
 
 }
 
@@ -229,15 +223,15 @@ void MapContainerClass::MapCellPressed(int x, int y)
 	PressedPosition.SetCoordIsometric(x, y);
 
 	if (CurrentTerrain != 0)
-	BorderCellPressed = CurrentTerrain->GetCellBorderMoved();
+	*BorderCellPressed = CurrentTerrain->GetCellBorderMoved();
 	else
 	{
 
 	BorderCellPressed = BorderCell;
-	BorderCellPressed.SetPosition(PressedPosition.DecPos(0), PressedPosition.DecPos(1));
+	BorderCellPressed->SetPosition(PressedPosition.DecPos(0), PressedPosition.DecPos(1));
 	}
 
-	BorderCellPressed.SetColor(sf::Color::Yellow);
+	BorderCellPressed->SetColor(sf::Color::Yellow);
 
 }
 

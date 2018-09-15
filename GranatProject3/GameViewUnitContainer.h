@@ -3,7 +3,8 @@
 #include "MapObjects.h"
 #include "AnimationSetContainer.h"
 
-class GameViewUnitContainer
+class DisplayInterface;
+class GameViewUnitContainer : public DrawContrainerInterface
 {
 public:
 	GameViewUnitContainer();
@@ -11,9 +12,7 @@ public:
 	std::shared_ptr<MapUnitObject> CurrentUnit = NULL;
 	QMap<QPair<int,int>,std::shared_ptr<MapUnitObject>> UnitOnMapContainer;
 
-	//int Scale = 1;
-
-	void DrawUnits(sf::RenderWindow &Window);
+	void Draw(DisplayInterface& Display);
 
 	void MoveUnits();
 

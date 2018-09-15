@@ -4,7 +4,8 @@
 #include <MapContainerClass.h>
 #include <QSFMLCanvas.h>
 #include <QTimer>
-#include <MainWindowInterface.h>
+class MainWindowInterface;
+class DisplayInterface;
 
 class GameDisplayEngine : public QObject
 {
@@ -13,8 +14,8 @@ public:
 	GameDisplayEngine();
 	~GameDisplayEngine();
 
-	void ConnectWindow(QSFMLCanvas* Interface);
-	 QSFMLCanvas* Window;
+	void ConnectDisplayInterface(MainWindowInterface* Interface);
+	 DisplayInterface* Display;
 
 
 
@@ -26,7 +27,6 @@ public:
 
 	 QTimer Timer;
 
-	 void DrawALL();
 	 
 	 MapContainerClass Map;
 	 GameViewUnitContainer Units;

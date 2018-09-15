@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 		GameDir = qgetenv("GAME_WORK_DIR");
 
 		GameDisplayEngine GameEngine;
-	    Interface.LinkGameObject(&GameEngine);
+		GameEngine.ConnectDisplayInterface(&Interface);
 		Interface.show();
 						  //GameEngine.RunGame();
 		                 
