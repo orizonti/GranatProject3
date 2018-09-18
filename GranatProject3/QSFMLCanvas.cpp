@@ -161,14 +161,8 @@ void QSFMLCanvas::keyReleaseEvent(QKeyEvent *event) {
 
 void QSFMLCanvas::ConvertMousePos(sf::Event& event)
 {
-	double x, y;
-	//===============================================================================================
-//	if (event.type == sf::Event::MouseMoved)
-//	{
-//		x_pos_real = 256 * ((event.mouseMove.x - this->width() / 2) / (CellSize.height()*Scale) - OffsetCamera.first);
-//		y_pos_real = 256 * ((event.mouseMove.y - this->height() / 2) / (CellSize.height()*Scale) - OffsetCamera.second);
-//		qDebug() << "MOUSE POS REAL  - " << x_pos_real << y_pos_real << event.mouseMove.x << event.mouseMove.y;
-//	}
+//GET POSITION IN GLOBAL MAP COORD SYSTEM 
+//THAT IS DEFINED AS OFFSET CENTER OF CAMERA ON CELLS COUNT + LENGTH FROM CENTER VIEW TO CURSOR IN CELL MEASUREMENT UNIT
 	if (event.type == sf::Event::MouseMoved)
 	{
 		event.mouseMove.x = 256 * ((event.mouseMove.x - this->width() / 2) / (CellSize.height()*Scale) - OffsetCamera.first);
@@ -178,7 +172,6 @@ void QSFMLCanvas::ConvertMousePos(sf::Event& event)
 	//===============================================================================================
 	if (event.type == sf::Event::MouseButtonPressed)
 	{
-		qDebug() << "MOUSE POS PRESSED  - " << event.mouseMove.x << event.mouseMove.y;
 		event.mouseButton.x = 256 * ((event.mouseButton.x - this->width() / 2) / (CellSize.height()*Scale) - OffsetCamera.first);
 		event.mouseButton.y = 256 * ((event.mouseButton.y - this->height() / 2) / (CellSize.height()*Scale) - OffsetCamera.second);
 	}

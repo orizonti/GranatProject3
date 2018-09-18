@@ -4,8 +4,6 @@
 #include "GameViewUnitContainer.h"
 #include "TileSetClass.h"
 
-typedef QVector<TerrainObjectClass*> Terrains;
-typedef QPair<int, int> PairCoord;
 
 class MapContainerClass : public DrawContrainerInterface
 {

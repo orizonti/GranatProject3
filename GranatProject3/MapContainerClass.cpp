@@ -227,7 +227,7 @@ void MapContainerClass::MapCellPressed(int x, int y)
 	else
 	{
 
-	BorderCellPressed = BorderCell;
+	*BorderCellPressed = *BorderCell;
 	BorderCellPressed->SetPosition(PressedPosition.DecPos(0), PressedPosition.DecPos(1));
 	}
 

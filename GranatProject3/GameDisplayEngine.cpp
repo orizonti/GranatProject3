@@ -26,13 +26,12 @@ GameDisplayEngine::GameDisplayEngine()
 
 void GameDisplayEngine::MouseControl(sf::Event event)
 {
-	//            //GET POSITION IN GLOBAL MAP COORD SYSTEM 
-	//            //THAT IS DEFINED AS OFFSET CENTER OF CAMERA ON CELLS COUNT + LENGTH FROM CENTER VIEW TO CURSOR IN CELL MEASUREMENT UNIT
+//GET POSITION IN GLOBAL MAP COORD SYSTEM 
+//THAT IS DEFINED AS OFFSET CENTER OF CAMERA ON CELLS COUNT + LENGTH FROM CENTER VIEW TO CURSOR IN CELL MEASUREMENT UNIT
 
 		//===============================================================================================
 				if (event.type == sf::Event::MouseMoved)
 				{
-		          qDebug() << "MOUSE POS  - " << event.mouseMove.x << event.mouseMove.y;
 				MousePosition.SetRealCoord(event.mouseMove.x,event.mouseMove.y);
 				Map.MapCellMoved(MousePosition.IsoPos(0), MousePosition.IsoPos(1));
 				Map.DefineCellMoved(MousePosition.MousePosReal(0), MousePosition.MousePosReal(1));
@@ -41,7 +40,6 @@ void GameDisplayEngine::MouseControl(sf::Event event)
 		//===============================================================================================
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
-		          qDebug() << "MOUSE POS PRESSED  - " << event.mouseMove.x << event.mouseMove.y;
 				MousePosition.SetRealCoord(event.mouseButton.x,event.mouseButton.y);
 				Map.MapCellPressed(MousePosition.IsoPos(0), MousePosition.IsoPos(1));
 

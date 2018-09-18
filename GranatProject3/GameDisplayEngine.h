@@ -4,6 +4,7 @@
 #include <MapContainerClass.h>
 #include <QSFMLCanvas.h>
 #include <QTimer>
+#include <QTime>
 class MainWindowInterface;
 class DisplayInterface;
 
