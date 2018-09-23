@@ -19,6 +19,17 @@
 #include <memory>
 #include <QXmlStreamWriter>
 #include <QFile>
+
+#include <boost/graph/astar_search.hpp>
+#include <boost/concept_check.hpp>
+#include <iostream>
+#include <map>
+#include <string>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/random.hpp>
+#include <boost/random.hpp>
+
+
 class DisplayInterface;
 class TerrainObjectClass;
 

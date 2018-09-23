@@ -183,6 +183,29 @@ QVector<double> MapContainerClass::GetCellHeightMap(int x, int y)
 
 }
 
+void MapContainerClass::GetGlobalMapRegion(QPair<int, int> BLPosition)
+{
+	QVector<TerrainObjectClass*> Hill = TerrainLayers.value(1);
+	// For
+	int Width  = 0;
+	int Height = 0;
+	QPair<int, int> BL;
+	QPair<int, int> BR;
+	QPair<int, int> TL;
+	QPair<int, int> TR;
+	QVector<QVector<double>> HeightMap;
+	for(auto Terrain: Hill)
+	{
+		BL = Terrain->Position.GetIsoCoord();
+		BR = BL; TL = BL; TR = BL;
+
+		BR.first  += Terrain->TileSize.width();
+		TL.second += Terrain->TileSize.height();
+
+		TR.first  += Terrain->TileSize.width(); TR.second += Terrain->TileSize.height();
+	}
+}
+
 void MapContainerClass::DefineCellMoved(int x, int y)
 {
 

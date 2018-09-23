@@ -3,9 +3,10 @@
 #include "TerrainObjectClass.h"
 #include "GameViewUnitContainer.h"
 #include "TileSetClass.h"
+#include "MapGraphInterface.h"
 
 
-class MapContainerClass : public DrawContrainerInterface
+class MapContainerClass : public DrawContrainerInterface , public MapGraphInterface
 {
 public:
 	MapContainerClass();
@@ -19,6 +20,7 @@ public:
 
 	TerrainObjectClass* CurrentTerrain = 0;  //IS NEEDED TO DRAW CURRENT CELL IN TERRAIN UNDER CURSOR
 
+	void GetGlobalMapRegion(QPair<int, int> BLPosition);
 
 	void DefineCellMoved(int x,int y); //DEFINE THAT CURSOR IS MOVING UNDER ANY HILL TO DRAW CELL BORDER ON HILL
 	void MapCellPressed(int x, int y);
@@ -58,7 +60,7 @@ public:
 	GameCoord PressedPosition; 
 
 	bool FLAG_CURSOR_ON_HILL = false;
-
+  
     //TileSetClass TileSet; //CONTAINER WITH TERRAIN ELEMENT OBJECTS THAT HAS IMAGE, GRID SHAPE BUT NOT ATTACHED TO ANY COORD IN MAP, IT IS IN TERRAIN_OBJECT_CLASS
 	//================================================================
 };

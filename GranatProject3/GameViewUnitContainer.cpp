@@ -81,3 +81,8 @@ void GameViewUnitContainer::MoveUnits()
 	}
 }
 
+void GameViewUnitContainer::GetGlobalMapRegion(QPair<int, int> BLPosition)
+{
+
+}
+

@@ -2,9 +2,10 @@
 #include "HeaderAndStructures.h"
 #include "MapObjects.h"
 #include "AnimationSetContainer.h"
+#include "MapGraphInterface.h"
 
 class DisplayInterface;
-class GameViewUnitContainer : public DrawContrainerInterface
+class GameViewUnitContainer : public DrawContrainerInterface, public MapGraphInterface
 {
 public:
 	GameViewUnitContainer();
@@ -16,6 +17,7 @@ public:
 
 	void MoveUnits();
 
+	void GetGlobalMapRegion(QPair<int, int> BLPosition);
 
  void MapCellPressed(int x,int y);
 };
