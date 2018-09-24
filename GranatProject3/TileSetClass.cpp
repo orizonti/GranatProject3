@@ -31,8 +31,9 @@ void TileSetClass::CreateTileSetFromMap(QString MapFilePath)
 {
 		QFile XMLMapFile(MapFilePath);                      //MAIN TMX FILE WITH MAP DATA
 		bool result = XMLMapFile.open(QIODevice::ReadOnly);
-		
-		QFile XMLwithHeights("E:/WorkDir/Heights1.xml");
+		GameDir = qgetenv("GAME_WORK_DIR");
+
+		QFile XMLwithHeights(GameDir + "/Heights1.xml");
 		XMLwithHeights.open(QFile::ReadOnly);
 
 //=========================================================================================================
